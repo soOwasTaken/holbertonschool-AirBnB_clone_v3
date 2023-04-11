@@ -86,3 +86,44 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+class TestDBStorageCount(unittest.TestCase):
+    """Test count method of DBStorage class"""
+    
+    @classmethod
+    def setUpClass(cls):
+        """Set up test class"""
+        # Create new state objects
+        cls.state1 = State(name='California')
+        cls.state2 = State(name='Texas')
+        cls.state3 = State(name='New York')
+        
+        # Add states to storage
+        DBStorage.new(cls.state1)
+        DBStorage.new(cls.state2)
+        DBStorage.new(cls.state3)
+        DBStorage.save()
+    
+    @classmethod
+    def tearDownClass(cls):
+        """Tear down test class"""
+        # Delete state objects from storage
+        DBStorage.delete(cls.state1)
+        DBStorage.delete(cls.state2)
+        DBStorage.delete(cls.state3)
+        DBStorage.save()
+    
+    def test_count_all(self):
+        """Test count method with no class specified"""
+        count = DBStorage.count()
+        self.assertEqual(count, 3)
+    
+    def test_count_class(self):
+        """Test count method with class specified"""
+        count = DBStorage.count(State)
+        self.assertEqual(count, 3)
+    
+    def test_count_invalid_class(self):
+        """Test count method with invalid class"""
+        count = DBStorage.count(str)
+        self.assertEqual(count, 0)
