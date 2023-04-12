@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""app v1 port set to 5050"""
 from flask import Flask
 from api.v1.views import app_views
 from models import storage
@@ -13,7 +14,7 @@ def teardown_storage(exception):
 
 
 if __name__ == "__main__":
-    # Get the host and port from environment variables, or use default values
+    """ all ips, port 5050"""
     host = os.environ.get("HBNB_API_HOST", "0.0.0.0")
     port = int(os.environ.get("HBNB_API_PORT", 5050))
 
