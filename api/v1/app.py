@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """app v1 port set to 5050"""
-from flask import Flask
+from flask import Flask, jsonify
 from api.v1.views import app_views
 from models import storage
 import os
@@ -12,6 +12,9 @@ def teardown_storage(exception):
     """Closes the storage connection"""
     storage.close()
 
+@app.errorhandler(404)
+def not_found(error):
+    return jsonify({"error": "Not Found"}), 404
 
 if __name__ == "__main__":
     """ all ips, port 5050"""
