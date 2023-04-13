@@ -50,7 +50,7 @@ def create_user():
 
 
 @app_views.route('/users/<user_id>', methods=['PUT'], strict_slashes=False)
-def update_amenity(user_id):
+def update_user(user_id):
     """Update user object using user_id"""
     user = storage.get(User, user_id)
     if user is None:
