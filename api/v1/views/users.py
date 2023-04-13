@@ -44,7 +44,7 @@ def create_user():
     if 'password' not in request.json:
         abort(400, 'Missing password')
     user = User(**request.json)
-    storage.new(User)
+    storage.new(user)
     storage.save()
     return jsonify(user.to_dict()), 201
 
