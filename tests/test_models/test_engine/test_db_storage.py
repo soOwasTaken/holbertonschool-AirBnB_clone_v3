@@ -93,17 +93,17 @@ class TestDBStorageCount(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count_all(self):
         """Test count method with no class specified"""
-        count = DBStorage().count()
+        count = models.storage.count()
         self.assertEqual(count, 3)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count_class(self):
         """Test count method with class specified"""
-        count = DBStorage().count(State)
+        count = models.storage.count(State)
         self.assertEqual(count, 3)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count_invalid_class(self):
         """Test count method with invalid class"""
-        count = DBStorage().count(str)
+        count = models.storage.count(str)
         self.assertEqual(count, 1)
