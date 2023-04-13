@@ -94,15 +94,15 @@ class TestDBStorageCount(unittest.TestCase):
 
     def test_count_all(self):
         """Test count method with no class specified"""
-        count = DBStorage.count()
+        count = DBStorage().count()
         self.assertEqual(count, 3)
 
     def test_count_class(self):
         """Test count method with class specified"""
-        count = DBStorage.count(State)
+        count = DBStorage().count(State)
         self.assertEqual(count, 3)
 
     def test_count_invalid_class(self):
         """Test count method with invalid class"""
-        count = DBStorage.count(str)
+        count = DBStorage().count(str)
         self.assertEqual(count, 1)
