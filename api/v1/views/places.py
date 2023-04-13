@@ -8,15 +8,26 @@ from models.city import City
 from models.user import User
 
 
+
+@app_views.route('/places', methods=['GET'], strict_slashes=False)
+def get_all_placess():
+    """Retrieve the list of all State objects"""
+    places = storage.all(Place).values()
+    places = [place.to_dict() for place in places]
+    return jsonify(places)
+
+
 @app_views.route('/cities/<city_id>/places',
                  methods=['GET'], strict_slashes=False)
 def get_all_places(city_id):
     """Retrieve the list of all Place objects of a City"""
     city = storage.get(City, city_id)
-    if city is None:
-        abort(404)
-    places = [place.to_dict() for place in city.places]
-    return jsonify(places)
+    places_list = []
+    places = storage.all(Place).values()
+    for place in places:
+        if place.city_id == city_id:
+            places_list.append(place.to_dict())
+    return jsonify(places_list)
 
 
 @app_views.route('/places/<place_id>',

@@ -7,6 +7,13 @@ from models.city import City
 from models.state import State
 
 
+@app_views.route('/cities', methods=['GET'], strict_slashes=False)
+def get_all_citiess():
+    """Retrieve the list of all Amenity objects"""
+    cities = storage.all(City).values()
+    cities_dict = [city.to_dict() for city in cities]
+    return jsonify(cities_dict)
+
 @app_views.route('/states/<state_id>/cities',
                  methods=['GET'], strict_slashes=False)
 def get_all_cities(state_id):

@@ -8,6 +8,12 @@ from models.review import Review
 from models.place import Place
 from models.user import User
 
+@app_views.route('/reviews', methods=['GET'], strict_slashes=False)
+def get_all_reviewss():
+    """Retrieve the list of all User objects"""
+    reviews = storage.all(Review).values()
+    review_dict = [review.to_dict() for review in reviews]
+    return jsonify(review_dict)
 
 @app_views.route('/places/<place_id>/reviews', methods=['GET'],
                  strict_slashes=False)
@@ -52,25 +58,19 @@ def create_review(place_id):
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
-
     if not request.json:
         abort(400, 'Not a JSON')
-
     if 'user_id' not in request.json:
         abort(400, 'Missing user_id')
-
     user = storage.get(User, request.json['user_id'])
     if user is None:
         abort(404)
-
     if 'text' not in request.json:
         abort(400, 'Missing text')
-
-    review = Review(place_id=place_id,
-                    user_id=request.json['user_id'], **request.json)
+    review = Review(**request.json)
+    review.place_id = place_id
     storage.new(review)
     storage.save()
-
     return jsonify(review.to_dict()), 201
 
 
