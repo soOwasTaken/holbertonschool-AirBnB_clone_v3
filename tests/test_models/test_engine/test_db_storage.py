@@ -112,6 +112,18 @@ class TestDBStorageCount(unittest.TestCase):
     def test_get(self):
         """test the get() method"""
         chevre = State(name="California")
+        models.storage.new(chevre)
+        models.storage.save()
         first_state_id = chevre.id
         result = models.storage.get(State, first_state_id)
-        self.assertEqual(None, result)
+        self.assertEqual(chevre, result)
+
+    def test_get2(self):
+        """test the get() method"""
+        chevredufutur = State(name="Californiaaa")
+        models.storage.new(chevredufutur)
+        models.storage.save()
+        first_state_id = chevredufutur.id
+        result = models.storage.get(State, first_state_id)
+        self.assertEqual(first_state_id, result.id)
+
