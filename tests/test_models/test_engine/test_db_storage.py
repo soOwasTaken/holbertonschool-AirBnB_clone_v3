@@ -42,7 +42,7 @@ class TestDBStorageDocs(unittest.TestCase):
         pep8s = pep8.StyleGuide(quiet=True)
         result = pep8s.check_files(['tests/test_models/test_engine/\
 test_db_storage.py'])
-        self.assertEqual(result.total_errors, 1,
+        self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
     def test_db_storage_module_docstring(self):
@@ -111,6 +111,7 @@ class TestDBStorageCount(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_get(self):
         """test the get() method"""
-        first_state_id = list(models.storage.all(State).values())[0].id
+        chevre = State(name="California")
+        first_state_id = chevre.id
         result = models.storage.get(State, first_state_id)
         self.assertEqual(None, result)
