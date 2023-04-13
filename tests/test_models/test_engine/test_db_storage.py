@@ -107,3 +107,10 @@ class TestDBStorageCount(unittest.TestCase):
         """Test count method with invalid class"""
         count = models.storage.count(str)
         self.assertEqual(count, 0)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """test the get() method"""
+        first_state_id = list(models.storage.all(State).values())[0].id
+        result = models.storage.get(State, first_state_id)
+        self.assertEqual(None, result)
