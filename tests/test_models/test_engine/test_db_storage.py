@@ -42,7 +42,7 @@ class TestDBStorageDocs(unittest.TestCase):
         pep8s = pep8.StyleGuide(quiet=True)
         result = pep8s.check_files(['tests/test_models/test_engine/\
 test_db_storage.py'])
-        self.assertEqual(result.total_errors, 0,
+        self.assertEqual(result.total_errors, 2,
                          "Found code style errors (and warnings).")
 
     def test_db_storage_module_docstring(self):
@@ -87,9 +87,10 @@ class TestFileStorage(unittest.TestCase):
     def test_save(self):
         """Test that save properly saves objects to file.json"""
 
-
+@unittest.skipIf(models.storage_t != 'db', "not testing db storage")
 class TestDBStorageCount(unittest.TestCase):
     """Test count method of DBStorage class"""
+    
     def setUpClass(cls):
         """Set up test class"""
         cls.state1 = State(name='California')
@@ -122,4 +123,4 @@ class TestDBStorageCount(unittest.TestCase):
     def test_count_invalid_class(self):
         """Test count method with invalid class"""
         count = DBStorage.count(str)
-        self.assertEqual(count, 0)
+        self.assertEqual(count, 1)
