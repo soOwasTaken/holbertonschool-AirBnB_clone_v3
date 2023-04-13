@@ -14,6 +14,7 @@ def get_all_citiess():
     cities_dict = [city.to_dict() for city in cities]
     return jsonify(cities_dict)
 
+
 @app_views.route('/states/<state_id>/cities',
                  methods=['GET'], strict_slashes=False)
 def get_all_cities(state_id):
