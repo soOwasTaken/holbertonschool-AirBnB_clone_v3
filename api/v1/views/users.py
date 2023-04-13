@@ -44,13 +44,13 @@ def create_user():
     if 'password' not in request.json:
         abort(400, 'Missing password')
     user = User(**request.json)
-    storage.new(User)
+    storage.new(user)
     storage.save()
     return jsonify(user.to_dict()), 201
 
 
 @app_views.route('/users/<user_id>', methods=['PUT'], strict_slashes=False)
-def update_amenity(user_id):
+def update_user(user_id):
     """Update user object using user_id"""
     user = storage.get(User, user_id)
     if user is None:
