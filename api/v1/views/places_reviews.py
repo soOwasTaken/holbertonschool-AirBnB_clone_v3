@@ -8,12 +8,14 @@ from models.review import Review
 from models.place import Place
 from models.user import User
 
+
 @app_views.route('/reviews', methods=['GET'], strict_slashes=False)
 def get_all_reviewss():
     """Retrieve the list of all User objects"""
     reviews = storage.all(Review).values()
     review_dict = [review.to_dict() for review in reviews]
     return jsonify(review_dict)
+
 
 @app_views.route('/places/<place_id>/reviews', methods=['GET'],
                  strict_slashes=False)
