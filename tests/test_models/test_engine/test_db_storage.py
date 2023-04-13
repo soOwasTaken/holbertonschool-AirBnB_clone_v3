@@ -126,4 +126,3 @@ class TestDBStorageCount(unittest.TestCase):
         first_state_id = chevredufutur.id
         result = models.storage.get(State, first_state_id)
         self.assertEqual(first_state_id, result.id)
-
